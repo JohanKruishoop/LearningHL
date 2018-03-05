@@ -1,0 +1,91 @@
+---
+Profiles:
+
+    ThreeOrgsOrdererGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *Vrendly
+                    - *Digitalefactuur
+                    - *Notbetalen
+    ThreeOrgsChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Vrendly
+                - *Digitalefactuur
+                - *Notbetalen
+
+Organizations:
+
+    - &OrdererOrg
+        Name: OrdererOrg
+
+        ID: OrdererMSP
+
+        MSPDir: crypto-config/ordererOrganizations/acme.com/msp
+
+    - &Vrendly
+        Name: VrendlyMSP
+
+        ID: VrendlyMSP
+
+        MSPDir: crypto-config/peerOrganizations/vrendly.localhost/msp
+
+        AnchorPeers:
+            - Host: peer0.vrendly.localhost
+              Port: 7051
+
+    - &Digitalefactuur
+        Name: DigitalefactuurMSP
+
+        ID: Digitalefactuur2MSP
+
+        MSPDir: crypto-config/peerOrganizations/digitalefactuur.localhost/msp
+
+        AnchorPeers:
+            - Host: peer0.digitalefactuur.localhost
+              Port: 7051
+
+    - &Notbetalen
+        Name: NotbetalenMSP
+
+        ID: NotbetalenMSP
+
+        MSPDir: crypto-config/peerOrganizations/notbetalen.localhost/msp
+
+        AnchorPeers:
+            - Host: peer0.notbetalen.localhost
+              Port: 7051
+
+Orderer: &OrdererDefaults
+
+    OrdererType: solo
+
+    Addresses:
+        - orderer.acme.com:7050
+
+    BatchTimeout: 5s
+
+    BatchSize:
+
+        MaxMessageCount: 10
+
+        AbsoluteMaxBytes: 99 MB
+
+        PreferredMaxBytes: 512 KB
+
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+
+    Organizations:
+
+Application: &ApplicationDefaults
+
+    Organizations:
