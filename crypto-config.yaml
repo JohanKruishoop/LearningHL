@@ -1,23 +1,23 @@
 OrdererOrgs:
   - Name: Orderer
-    Domain: localhost        # Do localhost for now, will need a domain for the organisation later
+    Domain: hyperledgerOrderer.server.bjoola.nl        # Do localhost for now, will need a domain for the organisation later
     Specs:
       - Hostname: orderer
 PeerOrgs:
   - Name: Vrendly
-    Domain: vrendly.localhost
+    Domain: hyperledgerOrg1.server.bjoola.nl
     Template:
       Count: 1
     Users:
       Count: 2
   - Name: Digitalefactuur
-      Domain: digitalefactuur.localhost
+      Domain: hyperledgerOrg2.server.bjoola.nl
       Template:
         Count: 1
       Users:
         Count: 2
   - Name: Notbetalen
-      Domain: notbetalen.localhost
+      Domain: hyperledgerOrg3.server.bjoola.nl
       Template:
         Count: 1
       Users:
