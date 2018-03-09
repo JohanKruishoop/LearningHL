@@ -1,6 +1,6 @@
 OrdererOrgs:
   - Name: Orderer
-    Domain: hyperledgerOrderer.server.bjoola.nl        # Do localhost for now, will need a domain for the organisation later
+    Domain: hyperledgerOrderer.server.bjoola.nl
     Specs:
       - Hostname: orderer
 PeerOrgs:
@@ -11,14 +11,14 @@ PeerOrgs:
     Users:
       Count: 2
   - Name: Digitalefactuur
-      Domain: hyperledgerOrg2.server.bjoola.nl
-      Template:
-        Count: 1
-      Users:
-        Count: 2
+    Domain: hyperledgerOrg2.server.bjoola.nl
+    Template:
+      Count: 1
+    Users:
+      Count: 2
   - Name: Notbetalen
-      Domain: hyperledgerOrg3.server.bjoola.nl
-      Template:
-        Count: 1
-      Users:
-        Count: 2
+    Domain: hyperledgerOrg3.server.bjoola.nl
+    Template:
+      Count: 1
+    Users:
+      Count: 2
