@@ -1,0 +1,53 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  hyperledgerOrderer.server.bjoola.nl:
+  peer0.hyperledgerOrg1.server.bjoola.nl:
+  peer0.hyperledgerOrg2.server.bjoola.nl:
+  peer0.hyperledgerOrg3.server.bjoola.nl:
+
+networks:
+  dftn:
+# "services" zijn containers
+services:
+  #Dit is de naam van de container
+  hyperledgerOrderer.server.bjoola.nl:
+    extends:
+      # Extending, het is wat je denkt. We willen extenden van de "file: ..." naar
+      # de "service: ..."
+      file:   base/docker-compose-base.yaml
+      service: hyperledgerOrderer.server.bjoola.nl
+    container_name: hyperledgerOrderer.server.bjoola.nl
+    # Alle peers van dezelfde oranisatie moeten in hetzelfde netwerk zitten, anders kunnen ze elkaar niet vinden.
+    networks:
+      - dftn
+
+  peer0.hyperledgerOrg1.server.bjoola.nl:
+    container_name: peer0.hyperledgerOrg1.server.bjoola.nl
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.hyperledgerOrg1.server.bjoola.nl
+    networks:
+      - dftn
+
+  peer0.hyperledgerOrg2.server.bjoola.nl:
+    container_name: peer0.hyperledgerOrg2.server.bjoola.nl
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.hyperledgerOrg2.server.bjoola.nl
+    networks:
+      - dftn
+
+  peer0.hyperledgerOrg3.server.bjoola.nl:
+    container_name: peer0.hyperledgerOrg3.server.bjoola.nl
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.hyperledgerOrg3.server.bjoola.nl
+    networks:
+      - dftn
+
