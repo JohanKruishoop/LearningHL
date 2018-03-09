@@ -1,21 +1,35 @@
 ---
 Profiles:
-
+    # Dit profiel is verantwoordelijk voor het opzetten van de genesisblock in de orderer.
+    # Hier staat vaak een *voor een naam, dit zegt dat het refereert naar een Alias die 
+    # aangegeven wordt verder in het document met $ voor de naam. De namen met * en & moeten
+    # overeenkomen. Denk aan het roepen van methods in andere talen, alleen dan op de yaml manier.
     ThreeOrgsOrdererGenesis:
         Orderer:
             <<: *OrdererDefaults
             Organizations:
-                - *OrdererOrg
+                - *Orderer
+        # Hier specificeren we aan welke organisaties deze orderer mag dienen. Dit moet omdat een
+        # orderer meerdere organisaties kan dienen
         Consortiums:
+            # Naam van het consortium(s)
             SampleConsortium:
+                # Welke organisaties deel uitmaken van het consortium, wat we eigenlijk zeggen dat in deze
+                # genesis block worden de public keys van de opgeschreven organisaties meegegeven.
                 Organizations:
                     - *Vrendly
                     - *Digitalefactuur
                     - *Notbetalen
+    
+    # Dit profiels is verantwoordelijk voor het maken van een channel,  We kunnen we meer maken door dit format
+    # over te nemen en het een andere naam te geven. We kunnen ook specificeren welke leden mee mogen doen aan
+    # het channel (kanaal)
     ThreeOrgsChannel:
+        # Deze consortium is van organisaties die mogen meedoen met dit kanaal
         Consortium: SampleConsortium
         Application:
             <<: *ApplicationDefaults
+            # Specifieke namen van de organisaties die mee mogen doen met dit kanaal
             Organizations:
                 - *Vrendly
                 - *Digitalefactuur
@@ -23,33 +37,33 @@ Profiles:
 
 Organizations:
 
-    - &OrdererOrg
-        Name: OrdererOrg
+    - &Orderer
+        Name: Orderer
 
         ID: OrdererMSP
 
-        MSPDir: crypto-config/ordererOrganizations/acme.com/msp
+        MSPDir: crypto-config/ordererOrganizations/hyperledgerOrderer.server.bjoola.nl/msp
 
     - &Vrendly
         Name: VrendlyMSP
 
         ID: VrendlyMSP
 
-        MSPDir: crypto-config/peerOrganizations/vrendly.localhost/msp
+        MSPDir: crypto-config/peerOrganizations/hyperledgerOrg1.server.bjoola.nl/msp
 
         AnchorPeers:
-            - Host: peer0.vrendly.localhost
+            - Host: Peer0.hyperledgerOrg1.server.bjoola.nl
               Port: 7051
 
     - &Digitalefactuur
         Name: DigitalefactuurMSP
 
-        ID: Digitalefactuur2MSP
+        ID: DigitalefactuurMSP
 
-        MSPDir: crypto-config/peerOrganizations/digitalefactuur.localhost/msp
+        MSPDir: crypto-config/peerOrganizations/hyperledgerOrg2.server.bjoola.nl/msp
 
         AnchorPeers:
-            - Host: peer0.digitalefactuur.localhost
+            - Host: peer0.hyperledgerOrg2.server.bjoola.nl
               Port: 7051
 
     - &Notbetalen
@@ -57,19 +71,21 @@ Organizations:
 
         ID: NotbetalenMSP
 
-        MSPDir: crypto-config/peerOrganizations/notbetalen.localhost/msp
+        MSPDir: crypto-config/peerOrganizations/hyperledgerOrg3.server.bjoola.nl/msp
 
         AnchorPeers:
-            - Host: peer0.notbetalen.localhost
+            - Host: peer0.hyperledgerOrg3.server.bjoola.nl
               Port: 7051
 
+# In yaml als we een & gebruiken betekent dit dat wat erna volgt een Alias is, het is een shortcut
 Orderer: &OrdererDefaults
 
     OrdererType: solo
 
     Addresses:
-        - orderer.acme.com:7050
+        - hyperledgerOrderer.server.bjoola.nl:7050
 
+    # Hier kunnen we de blokken van de chain instellen om zo de prestatie van de block chain te verbeteren
     BatchTimeout: 5s
 
     BatchSize:
